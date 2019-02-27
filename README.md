@@ -21,7 +21,7 @@
   * Account: This needs to be a local admin account
   * Run regardless of whether the user is logged in
   * Example screenshot:
-![Screenshot of setting up a task](https://i.imgur.com/FJmPMgx.png)
+![Screenshot of setting up a task](https://i.imgur.com/wmMvuyF.png)
 * Triggers config:
   * 15 minutes is an ideal frequency
   * Be sure to enable the trigger
