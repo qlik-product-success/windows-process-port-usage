@@ -31,7 +31,7 @@ Note, the output path can be altered in script variabel `$OutputFolder`
 1. Actions Tab Config:
     * Start a program
     * Path: `C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe`
-    * Arguments: `-ExecutionPolicy Bypass C:\Temp\port_usage.ps1`
+    * Arguments: `-ExecutionPolicy Bypass C:\Temp\Windows-Port-Usage.ps1`
     * Example Screenshot:
     ![Screenshot of setting up a task](https://i.imgur.com/Xm2soVK.png)
 1. Manually run the task & make sure it outputs a CSV
