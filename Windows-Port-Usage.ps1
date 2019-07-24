@@ -70,6 +70,6 @@ Export-Csv -Path "$CsvTcpConnections" -NoTypeInformation
 Get-NetUDPEndpoint | Select-Object CreationTime,LocalAddress,LocalPort, OwningProcess | ` 
 Select-Object @{Name='Timestamp';Expression={$ExecutionTimeStamp}}, `
               @{Name='HostName'; Expression={$env:computername}}, `
-              @{Name='Protocol'; Expression={"TCP"}}, `
+              @{Name='Protocol'; Expression={"UDP"}}, `
               * | `
 Export-Csv -Path "$CsvUdpConnections" -NoTypeInformation
