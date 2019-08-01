@@ -67,7 +67,7 @@ Select-Object @{Name='Timestamp';Expression={$ExecutionTimeStamp}}, `
               * | `
 Export-Csv -Path "$CsvTcpConnections" -NoTypeInformation
 
-Get-NetUDPEndpoint | Select-Object CreationTime,LocalAddress,LocalPort, OwningProcess | ` 
+Get-NetUDPEndpoint | Select-Object CreationTime,LocalAddress,LocalPort, OwningProcess | `
 Select-Object @{Name='Timestamp';Expression={$ExecutionTimeStamp}}, `
               @{Name='HostName'; Expression={$env:computername}}, `
               @{Name='Protocol'; Expression={"UDP"}}, `
