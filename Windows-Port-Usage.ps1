@@ -22,26 +22,51 @@
 
 <#
 .SYNOPSIS
-    Get snapshot of TCP port usage for all current Windows processes 
+    Get snapshot of Windows IPv4 and IPv6 port usage for all current Windows processes. 
 .DESCRIPTION
-    This script gets current running processes and open TCP connections.
-    The aggregated result is stored into a CSV files, which can be consumed into Qlik Sense for analysis
-.NOTES
-    This script should be run on regular interval through scheduled Windows taks to collect port allocaiton details over time. 
-    Default output is to C:\Temp, but this can be altered through OutputFolder variable.
+    This script gets current running processes and open connections for each process. 
+    The result is stored into a CSV files, which can be consumed into Qlik Sense for 
+    analysis. Files are named with Windows hostname and timestamp, to enable collecting 
+    information over time and from multiple hosts in parallel. 
+    Recommendation is to execute script on regular interval through Windows scheduled 
+    task to get a view of port usage over time.      
+.PARAMETER OutputFolder
+    Target folder for trace output. 
+    By default output is to same folder as script file. 
+.PARAMETER IncludeUDP
+    Apply this flag to also trace UDP port consumption. 
+    By default only TCP is traced. 
+.EXAMPLE 
+    ./Windows-Port-Usage.ps1 -OutputFolder "\\MyFileServer\PortTraces\" -IncludeUDP
+
+    This execution writes traces to fileserver, which means that logs from multiple 
+    nodes can be collected to the same central location. Also UDP traces are included.
+.EXAMPLE 
+    ./Windows-Port-Usage.ps1 -OutputFolder "\\MyFileServer\PortTraces\"
+
+    Write trace to file share, which means that logs from multiple nodes can be 
+    collected to the same central location. Only collects TCP port consumption.
+.EXAMPLE 
+    ./Windows-Port-Usage.ps1 -IncludeUDP
+
+    This execution writes traces to same folder as script. Also UDP traces are included.
 #>
- 
+
+param (
+    [string] $OutputFolder = ".\PortTraces\", 
+    [switch] $IncludeUDP   = $false       
+)
+
 # Define desired output location 
 # Note1: This folder will be created if it does not already exists
 # Note2: Qlik Sense analysis app must be updated to target same folder 
-$OutputFolder="C:\Temp\ProcessUsage\"
  
 # Create folder
 New-Item -ItemType Directory -Force -Path "$OutputFolder" | Out-Null
 
 # Get time of script execution in format YYYYMMDDThhmmss+ZZZZ
 # For example 20190717T121751+1000 for 17 July 2019 12:17:51 PM in GTM+10
-$ExecutionTimeStamp = Get-Date -Format o | ForEach-Object {$_ -replace"[-:]|(\.[0-9]{7})"}
+$ExecutionTimeStamp = Get-Date -Format o | ForEach-Object {$_ -replace "[-:]|(\.[0-9]{7})"}
 
 # Generate name for CSV output files
 $CsvProcessList    = "$OutputFolder$env:computername`_Processes_$ExecutionTimeStamp.csv"
@@ -58,6 +83,7 @@ Select-Object @{Name='Timestamp';Expression={$ExecutionTimeStamp}}, `
 Export-Csv -Path "$CsvProcessList" -NoTypeInformation
 
 # Get currently open TCP and UDP connections
+# Only get UDP conneciotns if flagged for inclusion
 # Store result into CSV files, including hostname and execution time
 
 Get-NetTCPConnection | Select-Object State,CreationTime,LocalAddress,LocalPort,RemoteAddress,RemotePort,OwningProcess | `
@@ -67,9 +93,13 @@ Select-Object @{Name='Timestamp';Expression={$ExecutionTimeStamp}}, `
               * | `
 Export-Csv -Path "$CsvTcpConnections" -NoTypeInformation
 
-Get-NetUDPEndpoint | Select-Object CreationTime,LocalAddress,LocalPort, OwningProcess | `
-Select-Object @{Name='Timestamp';Expression={$ExecutionTimeStamp}}, `
-              @{Name='HostName'; Expression={$env:computername}}, `
-              @{Name='Protocol'; Expression={"UDP"}}, `
-              * | `
-Export-Csv -Path "$CsvUdpConnections" -NoTypeInformation
+If($IncludeUDP) {
+
+    Get-NetUDPEndpoint | Select-Object CreationTime,LocalAddress,LocalPort, OwningProcess | `
+    Select-Object @{Name='Timestamp';Expression={$ExecutionTimeStamp}}, `
+                @{Name='HostName'; Expression={$env:computername}}, `
+                @{Name='Protocol'; Expression={"UDP"}}, `
+                * | `
+    Export-Csv -Path "$CsvUdpConnections" -NoTypeInformation
+
+}
