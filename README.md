@@ -7,7 +7,7 @@ This project contains a Powershell script that collect process and port allocati
 ### Powershell script
 
 1. Create folder `c:/temp` unless it already exists
-1. Clone *or* download this project to `c:/temp`
+1. Clone *or* download this GitHub project to `c:/temp`
     - Clone with Git <BR /> `git clone https://github.com/tonikautto/windows-process-port-usage` 
     - Download as ZIP <BR /> https://github.com/tonikautto/windows-process-port-usage/archive/master.zip
 
@@ -33,7 +33,7 @@ This project contains a Powershell script that collect process and port allocati
 
 ### Windows Task
 
-3. Configure a Windows Scheduled Task to execute this regularly:
+5. Configure a Windows Scheduled Task to execute this regularly:
     * Start > Task Scheduler
     * Highlight Task Scheduler Library
     * Create Task
