@@ -13,21 +13,13 @@ This project contains a Powershell script that collect process and port allocati
 
 1. Open Powershell and run the script manually to confirm it works
     - Trace only TCP and write results to same folder as PS1 file
-      ```
-      Windows-Port-Usage.ps1
-      ```
-    - Trace TCP and UDP and write results to same folder as PS1 file
-      ```
-      Windows-Port-Usage.ps1 -InlcudeUDP
-      ```
+      <br />`Windows-Port-Usage.ps1`
     - Trace only TCP and write results to custom location
-      ```
-      Windows-Port-Usage.ps1 -OutputFolder \\MyFileServer\PortTraces\"      
-      ```
+      <br />`Windows-Port-Usage.ps1 -OutputFolder "\\MyFileServer\PortTraces\"`
+    - Trace TCP and UDP and write results to same folder as PS1 file
+      <br />`Windows-Port-Usage.ps1 -InlcudeUDP`
     - Trace TCP and UDP and write results to custom location
-      ```
-      Windows-Port-Usage.ps1 -OutputFolder \\MyFileServer\PortTraces\" -InlcudeUDP
-      ```
+      <br />`Windows-Port-Usage.ps1 -OutputFolder "\\MyFileServer\PortTraces\" -InlcudeUDP`
 
 1. Confirm script output based selected output location
 
