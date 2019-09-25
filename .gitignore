@@ -1,4 +1,4 @@
 # Exclude CSV files, besides in SampleOutput
 *.csv
 !**/Sample Output/*.csv
-
+*.zip

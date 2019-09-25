@@ -12,8 +12,10 @@ This project contains a Powershell script that collect process and port allocati
     - Download as ZIP <BR /> https://github.com/tonikautto/windows-process-port-usage/archive/master.zip
 
 1. Open Powershell and run the script manually to confirm it works
-    - Trace only TCP and write results to same folder as PS1 file
+    - Trace only TCP and write results to subfolder 'PortTraces'
       <br />`Windows-Port-Usage.ps1`
+    - Trace only TCP and do not compress result to ZIP archive
+      <br />`Windows-Port-Usage.ps1 -NoZip` 
     - Trace only TCP and write results to custom location
       <br />`Windows-Port-Usage.ps1 -OutputFolder "\\MyFileServer\PortTraces\"`
     - Trace TCP and UDP and write results to same folder as PS1 file
