@@ -9,7 +9,7 @@ This project contains a Powershell script that collect process and port allocati
 1. Create folder `c:/temp` unless it already exists
 1. Clone *or* download this GitHub project to `c:/temp`
     - Clone with Git <BR /> `git clone https://github.com/tonikautto/windows-process-port-usage` 
-    - Download as ZIP <BR /> https://github.com/tonikautto/windows-process-port-usage/archive/master.zip
+    - Download as ZIP <BR /> https://github.com/qlik-product-success/windows-process-port-usage/archive/master.zip 
 
 1. Open Powershell and run the script manually to confirm it works
     - Trace only TCP and write results to subfolder 'PortTraces'
